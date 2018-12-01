@@ -15,48 +15,88 @@ function initMap() {
   var icons = {
     statusRed: {
       name: 'statusRed',
-      icon: iconBase + 'red-circle.png',
-      url: iconBase + 'red-circle.png', // url
+      url: './assets/icons/lifebuoy-red.svg', // url
       scaledSize: new google
         .maps
-        .Size(30, 30), // scaled size
+        .Size(20, 20), // scaled size
       origin: new google
         .maps
         .Point(0, 0), // origin
       anchor: new google
         .maps
-        .Point(0, 0) // anchor
+        .Point(10, 10) // anchor
     },
     statusBlue: {
       name: 'statusBlue',
-      icon: iconBase + 'blu-circle.png',
-      url: iconBase + 'blu-circle.png',
+      url: './assets/icons/lifebuoy-blue.svg',
       scaledSize: new google
         .maps
-        .Size(30, 30), // scaled size
+        .Size(20, 20),
       origin: new google
         .maps
-        .Point(0, 0), // origin
+        .Point(0, 0),
       anchor: new google
         .maps
-        .Point(0, 0) // anchor
+        .Point(10, 10)
     },
     statusGreen: {
       name: 'statusGreen',
-      icon: iconBase + 'grn-circle.png',
-      url: iconBase + 'grn-circle.png',
+      url: './assets/icons/lifebuoy-green.svg',
       scaledSize: new google
         .maps
-        .Size(30, 30), // scaled size
+        .Size(20, 20),
       origin: new google
         .maps
-        .Point(0, 0), // origin
+        .Point(0, 0),
       anchor: new google
         .maps
-        .Point(0, 0) // anchor
+        .Point(10, 10)
     }
   };
 
+  var iconRipples = {
+    statusRed: {
+      name: 'statusRed',
+      url: './assets/icons/ripple.svg',
+      scaledSize: new google
+        .maps
+        .Size(100, 100),
+      origin: new google
+        .maps
+        .Point(0, 0),
+      anchor: new google
+        .maps
+        .Point(50, 50)
+    },
+    statusBlue: {
+      name: 'statusBlue',
+      url: './assets/icons/ripple.svg',
+      scaledSize: new google
+        .maps
+        .Size(100, 100),
+      origin: new google
+        .maps
+        .Point(0, 0),
+      anchor: new google
+        .maps
+        .Point(50, 50)
+    },
+    statusGreen: {
+      name: 'statusGreen',
+      url: './assets/icons/ripple.svg',
+      scaledSize: new google
+        .maps
+        .Size(100, 100),
+      origin: new google
+        .maps
+        .Point(0, 0),
+      anchor: new google
+        .maps
+        .Point(50, 50)
+    }
+  };
+
+  
   var features = [
     {
       position: new google
@@ -143,7 +183,6 @@ function initMap() {
     }
   ];
 
-  console.log("position", features[0].position.lat);
   var flightPath = new google
     .maps
     .Polyline({path: flightPlanCoordinates, geodesic: true, strokeColor: '#FF0000', strokeOpacity: 1.0, strokeWeight: 2});
@@ -155,6 +194,15 @@ function initMap() {
       .Marker({
         position: feature.position,
         icon: icons[feature.type],
+        map: map,
+        optimized: false
+      });
+
+    var markerRipple = new google
+      .maps
+      .Marker({
+        position: feature.position,
+        icon: iconRipples[feature.type],
         map: map,
         optimized: false
       });
@@ -178,7 +226,7 @@ function initMap() {
   //   var icon = type.icon;
   //   var div = document.createElement('div');
   //   div.className = "map-status"
-  //   div.innerHTML = '<img src="' + icon + '" width="50px" height="50px"> ' + name;
+  //   div.innerHTML = '<img src="' + icon + '" width="20px" height="50px"> ' + name;
   //   legend.appendChild(div);
   // }
 
