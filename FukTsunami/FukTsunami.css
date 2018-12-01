@@ -20,7 +20,11 @@ img {
 }
 
 #map {
+<<<<<<< HEAD
   height: 100vh;
+=======
+  height: 100%;
+>>>>>>> develop
   width: 100%;
 }
 

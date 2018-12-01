@@ -1,4 +1,3 @@
-
 function TsunamiSensor(sensorInfo){
   this.id             = sensorInfo.id
   this.lat            = parseFloat(sensorInfo.lat)
@@ -26,34 +25,39 @@ function TsunamiSensor(sensorInfo){
   this.IMG_SENSOR_GREEN = '../assets/icons/lifebuoy-green.svg';
 
   this.DANGER_ZONE = {
-    radius: DANGER_RIPPLE_RADIUS,
+    radius: this.DANGER_RIPPLE_RADIUS,
     name: 'redZone',
     url: '../assets/icons/ripple-red.svg',
     scaledSize: new google
       .maps
-      .Size(DANGER_RIPPLE_RADIUS, DANGER_RIPPLE_RADIUS),
+      .Size(this.DANGER_RIPPLE_RADIUS, this.DANGER_RIPPLE_RADIUS),
     origin: new google
       .maps
       .Point(0, 0),
     anchor: new google
       .maps
-      .Point(DANGER_RIPPLE_RADIUS / 2, DANGER_RIPPLE_RADIUS / 2)
+      .Point(this.DANGER_RIPPLE_RADIUS / 2, this.DANGER_RIPPLE_RADIUS / 2)
   }
 
   this.SAFETY_ZONE = {
-    radius: SAFETY_RIPPLE_RADIUS,
+    radius: this.SAFETY_RIPPLE_RADIUS,
     name: 'redZone',
     url: '../assets/icons/ripple.svg',
     scaledSize: new google
       .maps
-      .Size(SAFETY_RIPPLE_RADIUS, SAFETY_RIPPLE_RADIUS),
+      .Size(this.SAFETY_RIPPLE_RADIUS, this.SAFETY_RIPPLE_RADIUS),
     origin: new google
       .maps
       .Point(0, 0),
     anchor: new google
       .maps
+<<<<<<< HEAD
       .Point(SAFETY_RIPPLE_RADIUS / 2, SAFETY_RIPPLE_RADIUS / 2)
   }
+=======
+      .Point(this.SAFETY_RIPPLE_RADIUS / 2, this.SAFETY_RIPPLE_RADIUS / 2)
+}
+>>>>>>> develop
 
   this.CIRCLE_ZONE = {
       // fillColor: '#3bac40',
@@ -71,22 +75,25 @@ function TsunamiSensor(sensorInfo){
 TsunamiSensor.prototype = {
   materialize: function(){
     var self = this;
-    self.drawDroneMarker();
+    self.drawTsunamiMarker();
   },
 
-  drawDroneMarker: function(){
+  drawTsunamiMarker: function(){
       var self = this;
       this.SENSOR_ICON = {
-        path: this.IMG_SENSOR_RED,
-            // fillColor: '#'+this.COLOR,
-            fillOpacity: 1,
-            strokeColor: '#fff',
-            strokeWeight: 1,
-            anchor: new google.maps.Point(18,18),
-            origin: new google.maps.Point(0,0),
-            size: new google.maps.Size(36, 36),
-            scale: 1,
-            rotation: 0,
+          url: this.IMG_SENSOR_RED,
+          // fillColor: '#'+this.COLOR
+          fillOpacity: 1,
+          strokeColor: '#fff',
+          strokeWeight: 1,
+          anchor: new google.maps.Point(10,10),
+          origin: new google.maps.Point(0,0),
+          scaledSize: new google
+            .maps
+            .Size(20, 20),
+          // size: new google.maps.Size(36, 36),
+          scale: 1,
+          rotation: 0,
       };
 
       var latlng_start = new google.maps.LatLng(this.lat,this.lng);
@@ -99,7 +106,15 @@ TsunamiSensor.prototype = {
           optimized: false
       });
       this.SENSOR_MARKER.setMap(map);
-      var circleZone = new google.maps.Circle(this.SAFETY_ZONE);
+
+      var circleZone = new google.maps.Marker({
+          position: latlng_start,
+          map: map,
+          draggable:false,
+          icon: this.SAFETY_ZONE,
+          zIndex: 3,
+          optimized: false
+      });
       circleZone.bindTo('center', this.SENSOR_MARKER, 'position');
 
       this.SENSOR_MARKER.circleZone = circleZone;
