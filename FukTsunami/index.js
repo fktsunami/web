@@ -64,7 +64,8 @@ function rippleEffect(status, radius) {
  * @param {Map} map 
  * @param {String} title 
  */
-function createMarker(position, icon, map, title) {
+
+function createMarker(position, icon, map, title, message) {
   var marker = new google
   .maps
   .Marker({
@@ -75,8 +76,12 @@ function createMarker(position, icon, map, title) {
     optimized: false
   });
 
+  var infoWindow = new google.maps.InfoWindow({
+    content: message
+  });
+
   google.maps.event.addListener(marker, 'click', function() { 
-     alert("I am marker " + marker.title); 
+    infoWindow.open(map, marker);
   }); 
 
   return marker;  
@@ -292,8 +297,8 @@ function initMap() {
 
   result.forEach(function (feature) {
 
-    this.createMarker(feature.position, icons[feature.type], map, 'marker');
-    this.createMarker(feature.position, rippleEffect('alert', 100)[feature.type], map, 'markerEffect');
+    this.createMarker(feature.position, icons[feature.type], map, 'marker', 'DETAIL SENSOR');
+    this.createMarker(feature.position, rippleEffect('alert', 60)[feature.type], map, 'markerEffect', 'DETAIL SENSOR');
   });
 
 }

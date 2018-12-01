@@ -78,7 +78,7 @@ TsunamiSensor.prototype = {
       var self = this;
       this.SENSOR_ICON = {
         path: this.IMG_SENSOR_RED,
-            // fillColor: '#'+this.COLOR,
+            // fillColor: '#'+this.COLOR
             fillOpacity: 1,
             strokeColor: '#fff',
             strokeWeight: 1,
