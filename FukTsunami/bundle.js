@@ -160,7 +160,7 @@
         // document.getElementById("explorer-div").style.visibility = 'visible';
         // document.getElementById('subscribediv').innerHTML = '<p><br></p>';
         // messageHistory = '';
-        toastr.success('Connected to server!').css("margin-top","80vh");
+        toastr.success('Connected to server!').css("margin-top","87vh");
 
         //
         // Subscribe to our current topic.
