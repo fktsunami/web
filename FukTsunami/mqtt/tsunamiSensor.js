@@ -1,3 +1,4 @@
+
 function TsunamiSensor(sensorInfo){
   this.id             = sensorInfo.id
   this.lat            = parseFloat(sensorInfo.lat)
@@ -17,6 +18,42 @@ function TsunamiSensor(sensorInfo){
   this.SENSOR_MARKER;
 
   this.SENSOR_ICON;
+  this.DANGER_RIPPLE_RADIUS = 100;
+  this.SAFETY_RIPPLE_RADIUS = 100;
+
+  this.IMG_SENSOR_RED = '../assets/icons/lifebuoy-red.svg';
+  this.IMG_SENSOR_YELLOW = '../assets/icons/lifebuoy-yellow.svg';
+  this.IMG_SENSOR_GREEN = '../assets/icons/lifebuoy-green.svg';
+
+  this.DANGER_ZONE = {
+    radius: DANGER_RIPPLE_RADIUS,
+    name: 'redZone',
+    url: '../assets/icons/ripple-red.svg',
+    scaledSize: new google
+      .maps
+      .Size(DANGER_RIPPLE_RADIUS, DANGER_RIPPLE_RADIUS),
+    origin: new google
+      .maps
+      .Point(0, 0),
+    anchor: new google
+      .maps
+      .Point(DANGER_RIPPLE_RADIUS / 2, DANGER_RIPPLE_RADIUS / 2)
+  }
+
+  this.SAFETY_ZONE = {
+    radius: SAFETY_RIPPLE_RADIUS,
+    name: 'redZone',
+    url: '../assets/icons/ripple.svg',
+    scaledSize: new google
+      .maps
+      .Size(SAFETY_RIPPLE_RADIUS, SAFETY_RIPPLE_RADIUS),
+    origin: new google
+      .maps
+      .Point(0, 0),
+    anchor: new google
+      .maps
+      .Point(SAFETY_RIPPLE_RADIUS / 2, SAFETY_RIPPLE_RADIUS / 2)
+}
 
   this.CIRCLE_ZONE = {
       // fillColor: '#3bac40',
@@ -40,7 +77,7 @@ TsunamiSensor.prototype = {
   drawDroneMarker: function(){
       var self = this;
       this.SENSOR_ICON = {
-        path: "M19,21.9L19,21.9l11,6.7L18,2L6,28.6l11-6.7l0,0C17.6,21.5,18.4,21.5,19,21.9z",
+        path: this.IMG_SENSOR_RED,
             // fillColor: '#'+this.COLOR,
             fillOpacity: 1,
             strokeColor: '#fff',
