@@ -165,6 +165,9 @@
         // Subscribe to our current topic.
         //
         mqttClient.subscribe('+/tsunamiSensor');
+
+        // Init tsunamiSensorRoom
+        window.tsunamiSensorRoom = new TsunamiSensorRoom();
     };
 
 //
@@ -187,8 +190,14 @@
 //
     window.mqttClientMessageHandler = function(topic, payload) {
         console.log('message: ' + topic + ':' + payload.toString());
+        var id = topic.split("/")[0];
 
-        payloadJSON = JSON.parse(payload);
+        if (id) {
+            payloadJSON = JSON.parse(payload)
+            payloadJSON.id = id
+
+            window.tsunamiSensorRoom.receiveData(payloadJSON)
+        }
     };
 
 //
