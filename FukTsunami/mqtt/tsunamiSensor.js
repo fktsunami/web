@@ -20,14 +20,20 @@ function TsunamiSensor(sensorInfo){
   this.DANGER_RIPPLE_RADIUS = 100;
   this.SAFETY_RIPPLE_RADIUS = 100;
 
-  this.IMG_SENSOR_RED = '../assets/icons/lifebuoy-red.svg';
-  this.IMG_SENSOR_YELLOW = '../assets/icons/lifebuoy-yellow.svg';
-  this.IMG_SENSOR_GREEN = '../assets/icons/lifebuoy-green.svg';
+  this.isDisplayedNotification = false;
+
+//   this.IMG_SENSOR_RED = './assets/icons/lifebuoy-red.svg';
+//   this.IMG_SENSOR_YELLOW = './assets/icons/lifebuoy-yellow.svg';
+//   this.IMG_SENSOR_GREEN = './assets/icons/lifebuoy-green.svg';
+  this.IMG_SENSOR_RED = 'https://firebasestorage.googleapis.com/v0/b/a-trung-roi.appspot.com/o/lifebuoy-red.svg?alt=media&token=c5631c81-1bb8-4943-a0e8-7efc0c365180';
+  this.IMG_SENSOR_YELLOW = 'https://firebasestorage.googleapis.com/v0/b/a-trung-roi.appspot.com/o/lifebuoy-blue.svg?alt=media&token=25693eb4-4474-488d-a57f-783bc303da81';
+  this.IMG_SENSOR_GREEN = 'https://firebasestorage.googleapis.com/v0/b/a-trung-roi.appspot.com/o/lifebuoy-green.svg?alt=media&token=3fd33d87-a2ab-42d7-bb4f-799294363711';
 
   this.DANGER_ZONE = {
     radius: this.DANGER_RIPPLE_RADIUS,
     name: 'redZone',
-    url: '../assets/icons/ripple-red.svg',
+    // url: './assets/icons/ripple-red.svg',
+    url: 'https://firebasestorage.googleapis.com/v0/b/a-trung-roi.appspot.com/o/ripple-red.svg?alt=media&token=975d2965-1b59-407e-8881-fdea6ca13990',
     scaledSize: new google
       .maps
       .Size(this.DANGER_RIPPLE_RADIUS, this.DANGER_RIPPLE_RADIUS),
@@ -42,7 +48,8 @@ function TsunamiSensor(sensorInfo){
   this.SAFETY_ZONE = {
     radius: this.SAFETY_RIPPLE_RADIUS,
     name: 'redZone',
-    url: '../assets/icons/ripple.svg',
+    // url: './assets/icons/ripple.svg',
+    url: 'https://firebasestorage.googleapis.com/v0/b/a-trung-roi.appspot.com/o/ripple.svg?alt=media&token=28bc4292-60a9-45d3-8c3b-93a1d1ca72e9',
     scaledSize: new google
       .maps
       .Size(this.SAFETY_RIPPLE_RADIUS, this.SAFETY_RIPPLE_RADIUS),
@@ -76,7 +83,7 @@ TsunamiSensor.prototype = {
   drawTsunamiMarker: function(){
       var self = this;
       this.SENSOR_ICON = {
-          url: this.IMG_SENSOR_RED,
+          url: this.IMG_SENSOR_GREEN,
           // fillColor: '#'+this.COLOR
           fillOpacity: 1,
           strokeColor: '#fff',
@@ -115,10 +122,59 @@ TsunamiSensor.prototype = {
       this.SENSOR_MARKER.circleZone = circleZone;
   },
 
-  update: function(newData){
+  update: function (newData) {
       var self = this;
-      if(this.SENSOR_ICON !== undefined){
-        // Update Sensor Data
+      if (this.SENSOR_ICON !== undefined) {
+          console.log('new data', newData);
+          // Update Sensor Data
+          // Test demo foce > 10 => tsunami
+          if (newData.force >= 10) {
+            //   Update change icon red lifeboud
+            this.SENSOR_MARKER.setMap(null);
+              this.SENSOR_ICON.url = this.IMG_SENSOR_RED;
+              var latlng_start = new google.maps.LatLng(this.lat,this.lng);
+
+              var circleZone = new google.maps.Marker({
+                  position: latlng_start,
+                  map: map,
+                  draggable: false,
+                  icon: this.DANGER_ZONE,
+                  zIndex: 3,
+                  optimized: false
+              });
+
+              circleZone.bindTo('center', this.SENSOR_MARKER, 'position');
+
+              this.SENSOR_MARKER.circleZone = circleZone;
+
+              this.SENSOR_MARKER.icon = this.SENSOR_ICON;
+              this.SENSOR_MARKER.setMap(map);
+
+              console.log("sensor", this.SENSOR_MARKER.icon);
+              
+                if (!this.isDisplayedNotification) {
+                    var toast = toastr["error"]("Tsunami").css("margin-top", "80vh");
+                    toast.options = {
+                        "closeButton": false,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-bottom-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "0",
+                        "hideDuration": "10000",
+                        "timeOut": "0",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+                    toastr.remove(toast);
+                    this.isDisplayedNotification = true;
+                }
+          }
       }
   },
 
