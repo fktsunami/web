@@ -17,9 +17,9 @@ function User(userInfo){
   this.DANGER_RIPPLE_RADIUS = 100;
   this.SAFETY_RIPPLE_RADIUS = 100;
 
-  this.IMG_SENSOR_RED = '../assets/icons/lifebuoy-red.svg';
-  this.IMG_SENSOR_YELLOW = '../assets/icons/lifebuoy-yellow.svg';
-  this.IMG_SENSOR_GREEN = '../assets/icons/lifebuoy-green.svg';
+  this.IMG_SENSOR_RED = '../assets/icons/library.svg';
+  this.IMG_SENSOR_YELLOW = '../assets/icons/library.svg';
+  this.IMG_SENSOR_GREEN = '../assets/icons/library.svg';
 
   this.DANGER_ZONE = {
     radius: this.DANGER_RIPPLE_RADIUS,
@@ -99,17 +99,17 @@ User.prototype = {
       });
       this.SENSOR_MARKER.setMap(map);
 
-      var circleZone = new google.maps.Marker({
-          position: latlng_start,
-          map: map,
-          draggable:false,
-          icon: this.SAFETY_ZONE,
-          zIndex: 3,
-          optimized: false
-      });
-      circleZone.bindTo('center', this.SENSOR_MARKER, 'position');
+      // var circleZone = new google.maps.Marker({
+      //     position: latlng_start,
+      //     map: map,
+      //     draggable:false,
+      //     icon: this.SAFETY_ZONE,
+      //     zIndex: 3,
+      //     optimized: false
+      // });
+      // circleZone.bindTo('center', this.SENSOR_MARKER, 'position');
 
-      this.SENSOR_MARKER.circleZone = circleZone;
+      // this.SENSOR_MARKER.circleZone = circleZone;
   },
 
   update: function(newData){
