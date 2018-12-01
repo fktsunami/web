@@ -37,3 +37,8 @@ img{
       #legend img {
         vertical-align: middle;
       }
+
+.map-status {
+  /* width: 80px; */
+  /* height: 50px; */
+}
