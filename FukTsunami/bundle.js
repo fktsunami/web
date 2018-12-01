@@ -164,7 +164,7 @@
         //
         // Subscribe to our current topic.
         //
-        // mqttClient.subscribe(currentlySubscribedTopic);
+        mqttClient.subscribe('+/tsunamiSensor');
     };
 
 //
