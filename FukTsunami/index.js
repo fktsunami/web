@@ -1,5 +1,61 @@
 var map;
 
+/**
+ * @param {String} status Include: normal and alert
+ * @param {Integer} radius Radius ripple 
+ */
+function rippleEffect(status, radius) {
+  let url = './assets/icons/ripple.svg';
+  
+  if (status === 'alert') {
+    url = './assets/icons/ripple-red.svg';
+  }
+
+  var iconRipples = {
+    statusRed: {
+      name: 'statusRed',
+      url: url,
+      scaledSize: new google
+        .maps
+        .Size(radius, radius),
+      origin: new google
+        .maps
+        .Point(0, 0),
+      anchor: new google
+        .maps
+        .Point(radius /2, radius/2)
+    },
+    statusYellow: {
+      name: 'statusYellow',
+      url: url,
+      scaledSize: new google
+        .maps
+        .Size(radius, radius),
+      origin: new google
+        .maps
+        .Point(0, 0),
+      anchor: new google
+        .maps
+        .Point(radius/2, radius/2)
+    },
+    statusGreen: {
+      name: 'statusGreen',
+      url: url,
+      scaledSize: new google
+        .maps
+        .Size(radius, radius),
+      origin: new google
+        .maps
+        .Point(0, 0),
+      anchor: new google
+        .maps
+        .Point(radius/2, radius/2)
+    }
+  };
+
+  return iconRipples;
+}
+
 function initMap() {
   map = new google
     .maps
@@ -26,9 +82,9 @@ function initMap() {
         .maps
         .Point(10, 10) // anchor
     },
-    statusBlue: {
-      name: 'statusBlue',
-      url: './assets/icons/lifebuoy-blue.svg',
+    statusYellow: {
+      name: 'statusYellow',
+      url: './assets/icons/lifebuoy-yellow.svg',
       scaledSize: new google
         .maps
         .Size(20, 20),
@@ -68,8 +124,8 @@ function initMap() {
         .maps
         .Point(50, 50)
     },
-    statusBlue: {
-      name: 'statusBlue',
+    statusYellow: {
+      name: 'statusYellow',
       url: './assets/icons/ripple.svg',
       scaledSize: new google
         .maps
@@ -96,7 +152,6 @@ function initMap() {
     }
   };
 
-  
   var features = [
     {
       position: new google
@@ -112,12 +167,12 @@ function initMap() {
       position: new google
         .maps
         .LatLng(15.998564, 108.282701),
-      type: 'statusBlue'
+      type: 'statusYellow'
     }, {
       position: new google
         .maps
         .LatLng(15.945672, 108.349546),
-      type: 'statusBlue'
+      type: 'statusYellow'
     }, {
       position: new google
         .maps
@@ -202,7 +257,7 @@ function initMap() {
       .maps
       .Marker({
         position: feature.position,
-        icon: iconRipples[feature.type],
+        icon: rippleEffect('alert', 100)[feature.type],
         map: map,
         optimized: false
       });
@@ -218,19 +273,4 @@ function initMap() {
       .id = 'markerLayer';
   };
   myoverlay.setMap(map);
-
-  // var legend = document.getElementById('legend');
-  // for (var key in icons) {
-  //   var type = icons[key];
-  //   var name = type.name;
-  //   var icon = type.icon;
-  //   var div = document.createElement('div');
-  //   div.className = "map-status"
-  //   div.innerHTML = '<img src="' + icon + '" width="20px" height="50px"> ' + name;
-  //   legend.appendChild(div);
-  // }
-
-  // map
-  //   .controls[google.maps.ControlPosition.RIGHT_BOTTOM]
-  //   .push(legend);
 }
