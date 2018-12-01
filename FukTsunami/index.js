@@ -57,6 +57,7 @@ function rippleEffect(status, radius) {
 }
 
 
+
 /**
  * Func create new marker in map with position
  * @param {Position} position 
@@ -65,6 +66,18 @@ function rippleEffect(status, radius) {
  * @param {String} title 
  */
 function createMarker(position, icon, map, title) {
+  var secretMessages = "This";
+  
+  function attachSecretMessage(marker, secretMessage) {
+    var infowindow = new google.maps.InfoWindow({
+    content: secretMessage
+  });
+
+  marker.addListener('click', function() {
+      infowindow.open(marker.get('map'), marker);
+    });
+  }
+  
   var marker = new google
   .maps
   .Marker({
@@ -76,7 +89,8 @@ function createMarker(position, icon, map, title) {
   });
 
   google.maps.event.addListener(marker, 'click', function() { 
-     alert("I am marker " + marker.title); 
+     // alert("I am marker " + marker.title); 
+     attachSecretMessage(marker, secretMessages);
   }); 
 
   return marker;  
