@@ -53,7 +53,7 @@ function TsunamiSensor(sensorInfo){
     anchor: new google
       .maps
       .Point(SAFETY_RIPPLE_RADIUS / 2, SAFETY_RIPPLE_RADIUS / 2)
-}
+  }
 
   this.CIRCLE_ZONE = {
       // fillColor: '#3bac40',
