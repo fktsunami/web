@@ -306,10 +306,10 @@ function initMap() {
 
   // flightPath.setMap(map); Create markers.
 
-  var result = arrNodeLifeBuoy;
-  result.forEach(function (feature) {
-    this.createMarker(feature.position, icons[feature.type], map, 'marker', feature);
-    this.createMarker(feature.position, rippleEffect('alert', 60)[feature.type], map, 'markerEffect', feature);
-  });
+  // var result = arrNodeLifeBuoy;
+  // result.forEach(function (feature) {
+  //   this.createMarker(feature.position, icons[feature.type], map, 'marker', feature);
+  //   this.createMarker(feature.position, rippleEffect('alert', 60)[feature.type], map, 'markerEffect', feature);
+  // });
 
 }

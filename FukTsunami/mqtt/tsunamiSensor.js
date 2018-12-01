@@ -128,6 +128,50 @@ TsunamiSensor.prototype = {
           console.log('new data', newData);
           // Update Sensor Data
           // Test demo foce > 10 => tsunami
+          if (newData.force >= 0 && newData.force <= 5) {
+            this.SENSOR_MARKER.setMap(null);
+            this.SENSOR_ICON.url = this.IMG_SENSOR_GREEN;
+            var latlng_start = new google.maps.LatLng(this.lat,this.lng);
+
+            var circleZone = new google.maps.Marker({
+                position: latlng_start,
+                map: map,
+                draggable: false,
+                icon: this.SAFETY_ZONE,
+                zIndex: 3,
+                optimized: false
+            });
+
+            circleZone.bindTo('center', this.SENSOR_MARKER, 'position');
+
+            this.SENSOR_MARKER.circleZone = circleZone;
+
+            this.SENSOR_MARKER.icon = this.SENSOR_ICON;
+            this.SENSOR_MARKER.setMap(map);
+          }
+
+          if (newData.force > 5 && newData.force < 10) {
+            this.SENSOR_MARKER.setMap(null);
+            this.SENSOR_ICON.url = this.IMG_SENSOR_YELLOW;
+            var latlng_start = new google.maps.LatLng(this.lat,this.lng);
+
+            var circleZone = new google.maps.Marker({
+                position: latlng_start,
+                map: map,
+                draggable: false,
+                icon: this.SAFETY_ZONE,
+                zIndex: 3,
+                optimized: false
+            });
+
+            circleZone.bindTo('center', this.SENSOR_MARKER, 'position');
+
+            this.SENSOR_MARKER.circleZone = circleZone;
+
+            this.SENSOR_MARKER.icon = this.SENSOR_ICON;
+            this.SENSOR_MARKER.setMap(map);
+          }
+
           if (newData.force >= 10) {
             //   Update change icon red lifeboud
             this.SENSOR_MARKER.setMap(null);
@@ -150,8 +194,6 @@ TsunamiSensor.prototype = {
               this.SENSOR_MARKER.icon = this.SENSOR_ICON;
               this.SENSOR_MARKER.setMap(map);
 
-              console.log("sensor", this.SENSOR_MARKER.icon);
-              
                 if (!this.isDisplayedNotification) {
                     var toast = toastr["error"]("Tsunami").css("margin-top", "80vh");
                     toast.options = {
