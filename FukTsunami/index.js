@@ -2,11 +2,11 @@ var map;
 
 /**
  * @param {String} status Include: normal and alert
- * @param {Integer} radius Radius ripple 
+ * @param {Integer} radius Radius ripple
  */
 function rippleEffect(status, radius) {
   let url = './assets/icons/ripple.svg';
-  
+
   if (status === 'alert') {
     url = './assets/icons/ripple-red.svg';
   }
@@ -23,7 +23,7 @@ function rippleEffect(status, radius) {
         .Point(0, 0),
       anchor: new google
         .maps
-        .Point(radius /2, radius/2)
+        .Point(radius / 2, radius / 2)
     },
     statusYellow: {
       name: 'statusYellow',
@@ -36,7 +36,7 @@ function rippleEffect(status, radius) {
         .Point(0, 0),
       anchor: new google
         .maps
-        .Point(radius/2, radius/2)
+        .Point(radius / 2, radius / 2)
     },
     statusGreen: {
       name: 'statusGreen',
@@ -49,12 +49,17 @@ function rippleEffect(status, radius) {
         .Point(0, 0),
       anchor: new google
         .maps
-        .Point(radius/2, radius/2)
+        .Point(radius / 2, radius / 2)
     }
   };
 
   return iconRipples;
 }
+
+var mapCenter = {
+  lat: 15.987012,
+  lng: 108.324270
+};
 
 function initMap() {
   map = new google
@@ -67,7 +72,6 @@ function initMap() {
       mapTypeId: 'roadmap'
     });
 
-  var iconBase = 'http://maps.google.com/mapfiles/kml/paddle/';
   var icons = {
     statusRed: {
       name: 'statusRed',
@@ -110,86 +114,98 @@ function initMap() {
     }
   };
 
-  var iconRipples = {
-    statusRed: {
-      name: 'statusRed',
-      url: './assets/icons/ripple.svg',
-      scaledSize: new google
-        .maps
-        .Size(100, 100),
-      origin: new google
-        .maps
-        .Point(0, 0),
-      anchor: new google
-        .maps
-        .Point(50, 50)
-    },
-    statusYellow: {
-      name: 'statusYellow',
-      url: './assets/icons/ripple.svg',
-      scaledSize: new google
-        .maps
-        .Size(100, 100),
-      origin: new google
-        .maps
-        .Point(0, 0),
-      anchor: new google
-        .maps
-        .Point(50, 50)
-    },
-    statusGreen: {
-      name: 'statusGreen',
-      url: './assets/icons/ripple.svg',
-      scaledSize: new google
-        .maps
-        .Size(100, 100),
-      origin: new google
-        .maps
-        .Point(0, 0),
-      anchor: new google
-        .maps
-        .Point(50, 50)
-    }
-  };
-
-  var features = [
+  // List data from server
+  var arrNodeLifeBuoy = [
     {
-      position: new google
-        .maps
-        .LatLng(16.061281, 108.285432),
-      type: 'statusRed'
-    }, {
-      position: new google
-        .maps
-        .LatLng(16.102878, 108.318747),
-      type: 'statusRed'
-    }, {
-      position: new google
-        .maps
-        .LatLng(15.998564, 108.282701),
-      type: 'statusYellow'
-    }, {
-      position: new google
-        .maps
-        .LatLng(15.945672, 108.349546),
-      type: 'statusYellow'
-    }, {
-      position: new google
-        .maps
-        .LatLng(15.999849, 108.404272),
-      type: 'statusGreen'
-    }, {
-      position: new google
-        .maps
-        .LatLng(16.075236, 108.399794),
-      type: 'statusGreen'
-    }, {
-      position: new google
-        .maps
-        .LatLng(15.991977, 108.466355),
-      type: 'statusGreen'
+      lat: 16.061281,
+      lng: 108.285432,
+      gatewayId: 'gateway001',
+      force: 10, // Newton unit
+      gyroscope: {
+        x: 200,
+        y: 400,
+        z: 500
+      }
+    },
+    {
+      lat: 16.102878,
+      lng: 108.318747,
+      gatewayId: 'gateway002',
+      force: 20,
+      gyroscope: {
+        x: 200,
+        y: 400,
+        z: 500
+      }
+    },
+    {
+      lat: 15.998564,
+      lng: 108.282701,
+      gatewayId: 'gateway003',
+      force: 30,
+      gyroscope: {
+        x: 200,
+        y: 400,
+        z: 500
+      }
+    },
+    {
+      lat: 15.945672,
+      lng: 108.349546,
+      gatewayId: 'gateway004',
+      force: 40,
+      gyroscope: {
+        x: 200,
+        y: 400,
+        z: 500
+      }
+    },
+    {
+      lat: 15.999849,
+      lng: 108.404272,
+      gatewayId: 'gateway005',
+      force: 50,
+      gyroscope: {
+        x: 200,
+        y: 400,
+        z: 500
+      }
+    },
+    {
+      lat: 16.075236,
+      lng: 108.399794,
+      gatewayId: 'gateway006',
+      force: 60,
+      gyroscope: {
+        x: 200,
+        y: 400,
+        z: 500
+      }
+    },
+    {
+      lat: 15.991977,
+      lng: 108.466355,
+      gatewayId: 'gateway007',
+      force: 70,
+      gyroscope: {
+        x: 200,
+        y: 400,
+        z: 500
+      }
+    },
+  ]
+
+  // Handle update status with force
+  arrNodeLifeBuoy.forEach(function(item) {
+    item.position = new google.maps.LatLng(item.lat, item.lng);
+    if (item.force > 0 && item.force < 30) {
+      item.type = 'statusGreen';
+    } else if (item.force < 50) {
+      item.type = 'statusYellow';
+    } else {
+      item.type = 'statusRed';
     }
-  ];
+  });
 
   // Define the LatLng coordinates for the polygon's path.
   var triangleCoords = [
@@ -243,7 +259,10 @@ function initMap() {
     .Polyline({path: flightPlanCoordinates, geodesic: true, strokeColor: '#FF0000', strokeOpacity: 1.0, strokeWeight: 2});
 
   // flightPath.setMap(map); Create markers.
-  features.forEach(function (feature) {
+
+  var result = arrNodeLifeBuoy;
+
+  result.forEach(function (feature) {
     var marker = new google
       .maps
       .Marker({
@@ -262,15 +281,15 @@ function initMap() {
         optimized: false
       });
   });
-
-  var myoverlay = new google
-    .maps
-    .OverlayView();
-  myoverlay.draw = function () {
-    this
-      .getPanes()
-      .markerLayer
-      .id = 'markerLayer';
-  };
-  myoverlay.setMap(map);
+  
+  // var myoverlay = new google
+  //   .maps
+  //   .OverlayView();
+  // myoverlay.draw = function () {
+  //   this
+  //     .getPanes()
+  //     .markerLayer
+  //     .id = 'markerLayer';
+  // };
+  // myoverlay.setMap(map);
 }
