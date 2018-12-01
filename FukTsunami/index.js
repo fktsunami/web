@@ -103,18 +103,18 @@ function initMap() {
       center: new google
         .maps
         .LatLng(15.987012, 108.324270),
-      mapTypeId: 'hybrid',
-      // scrollwheel: true,
-      // mapTypeControl: true,
-      // mapTypeControlOptions: {
-      //     style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-      //     position: google.maps.ControlPosition.LEFT_TOP
-      // },
-      zoomControl: true,
-    zoomControlOptions: {
-        style: google.maps.ZoomControlStyle.SMALL,
-        position: google.maps.ControlPosition.LEFT_CENTER
-};
+        mapTypeId: 'hybrid',
+        // scrollwheel: true,
+        // mapTypeControl: true,
+        // mapTypeControlOptions: {
+        //     style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+        //     position: google.maps.ControlPosition.LEFT_TOP
+        // },
+        zoomControl: true,
+        zoomControlOptions: {
+          style: google.maps.ZoomControlStyle.SMALL,
+          position: google.maps.ControlPosition.LEFT_CENTER
+        }
     });
 
   var icons = {
