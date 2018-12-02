@@ -28,8 +28,8 @@ function TsunamiSensor(sensorInfo){
 
   this.SENSOR_MARKER_INFO = new google.maps.InfoWindow({
     content: '<div id="google-popup"><p><i class="fas fa-file-signature" style="color:blue; font-weight:both;"></i>&nbsp&nbsp'+ this.gatewayId + '</p><p><i class="fas fa-map-marked-alt" style="color:red"></i>&nbsp&nbsp'
-    + this.lat + '&nbsp&nbsp(lat)</p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp'  + this.lng +
-    '&nbsp&nbsp(lng)<p><br><i class="fas fa-fist-raised" style="color:green"></i>&nbsp&nbsp&nbsp&nbsp' +this.force + '</p></div>',
+    + this.lat + '&nbsp&nbsp(lat)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp'  + this.lng +
+    '&nbsp&nbsp(lng)</p><p><br><i class="fas fa-fist-raised" style="color:green"></i>&nbsp&nbsp&nbsp&nbsp' +this.force + '</p></div>',
   });
 
   this.SENSOR_ICON;
@@ -126,7 +126,6 @@ TsunamiSensor.prototype = {
     
       this.SENSOR_MARKER.setMap(map);
 
-      console.log("SENSOR_MARKER_INFO", this.SENSOR_MARKER_INFO);
       this.SENSOR_MARKER.addListener('click', function() {
         self.SENSOR_MARKER_INFO.open(map, self.SENSOR_MARKER);
       });
@@ -148,7 +147,6 @@ TsunamiSensor.prototype = {
   update: function (newData) {
       var self = this;
       if (this.SENSOR_ICON !== undefined) {
-          console.log('new data', newData);
           // Update Sensor Data
           // Test demo foce > 10 => tsunami
           if (newData.force >= 0 && newData.force <= 5) {

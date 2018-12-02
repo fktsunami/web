@@ -160,7 +160,7 @@
         // document.getElementById("explorer-div").style.visibility = 'visible';
         // document.getElementById('subscribediv').innerHTML = '<p><br></p>';
         // messageHistory = '';
-        toastr.success('Connected to server!').css("margin-top","80vh");
+        toastr.success('Connected to server!').css("margin-top","87vh");
 
         //
         // Subscribe to our current topic.
@@ -198,12 +198,12 @@
         if (id && topicName == "tsunamiSensor") {
             payloadJSON = JSON.parse(payload)
             payloadJSON.id = id
-
+            console.log("marker");
             window.tsunamiSensorRoom.receiveData(payloadJSON)
         } else if (id && topicName == "user"){
             payloadJSON = JSON.parse(payload)
             payloadJSON.id = id
-
+            console.log("user");
             window.userRoom.receiveData(payloadJSON)
         }
     };
