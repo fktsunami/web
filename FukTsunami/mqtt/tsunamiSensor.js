@@ -1,3 +1,13 @@
+function addInfoWindow(marker, message) {
+    var infoWindow = new google.maps.InfoWindow({
+        content: message
+    });
+
+    google.maps.event.addListener(marker, 'click', function () {
+        infoWindow.open(map, marker);
+    });
+};
+
 function TsunamiSensor(sensorInfo){
   this.id             = sensorInfo.id
   this.lat            = parseFloat(sensorInfo.lat)
@@ -15,6 +25,12 @@ function TsunamiSensor(sensorInfo){
   this.CURRENT_POSITION_LNG
 
   this.SENSOR_MARKER;
+
+  this.SENSOR_MARKER_INFO = new google.maps.InfoWindow({
+    content: '<div id="google-popup"><p><i class="fas fa-file-signature" style="color:blue; font-weight:both;"></i>&nbsp&nbsp'+ this.gatewayId + '</p><p><i class="fas fa-map-marked-alt" style="color:red"></i>&nbsp&nbsp'
+    + this.lat + '&nbsp&nbsp(lat)</p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp'  + this.lng +
+    '&nbsp&nbsp(lng)<p><br><i class="fas fa-fist-raised" style="color:green"></i>&nbsp&nbsp&nbsp&nbsp' +this.force + '</p></div>',
+  });
 
   this.SENSOR_ICON;
   this.DANGER_RIPPLE_RADIUS = 100;
@@ -107,7 +123,13 @@ TsunamiSensor.prototype = {
           zIndex: 4,
           optimized: false
       });
+    
       this.SENSOR_MARKER.setMap(map);
+
+      console.log("SENSOR_MARKER_INFO", this.SENSOR_MARKER_INFO);
+      this.SENSOR_MARKER.addListener('click', function() {
+        self.SENSOR_MARKER_INFO.open(map, self.SENSOR_MARKER);
+      });
 
       var circleZone = new google.maps.Marker({
           position: latlng_start,
@@ -120,6 +142,7 @@ TsunamiSensor.prototype = {
       circleZone.bindTo('center', this.SENSOR_MARKER, 'position');
 
       this.SENSOR_MARKER.circleZone = circleZone;
+
   },
 
   update: function (newData) {
@@ -148,6 +171,7 @@ TsunamiSensor.prototype = {
 
             this.SENSOR_MARKER.icon = this.SENSOR_ICON;
             this.SENSOR_MARKER.setMap(map);
+
           }
 
           if (newData.force > 5 && newData.force < 10) {
@@ -170,6 +194,7 @@ TsunamiSensor.prototype = {
 
             this.SENSOR_MARKER.icon = this.SENSOR_ICON;
             this.SENSOR_MARKER.setMap(map);
+
           }
 
           if (newData.force >= 10) {
@@ -192,6 +217,7 @@ TsunamiSensor.prototype = {
               this.SENSOR_MARKER.circleZone = circleZone;
 
               this.SENSOR_MARKER.icon = this.SENSOR_ICON;
+
               this.SENSOR_MARKER.setMap(map);
 
                 if (!this.isDisplayedNotification) {
